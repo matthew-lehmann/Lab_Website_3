@@ -1,0 +1,91 @@
+<% include ../partials/header %>
+<% include ../partials/menu %>
+<% 
+	if(result_2) {
+		var wins = 0;
+		var losses = 0;
+		result_2.forEach(function(item){
+			wins += 1;
+		}); 
+		result_3.forEach(function(item2){
+			losses += 1;
+		}); 
+    } %>
+	<div class="container">
+		<br>
+		<div class="jumbotron">
+		  <h1 class="display-4">Fall 2018 Stats</h1>
+		  <p class="lead">Detailed information on how the Buffs are doing in the 2018 Football Season!</p>
+		</div>
+		
+		<table class="table table-bordered table-dark" id="stats_table">
+			<tr>
+				<th class="align-bottom" rowspan="2">Game Date</th>
+				<th class="align-bottom"rowspan="2">Opposing Team Name</th>
+				<th class="text-center" colspan="2">Score</th>
+				<th class="align-bottom" rowspan="2">Winner</th>
+			</tr>
+			<tr>
+				<th>Home Score</th>
+				<th>Opp. Score</th>
+			</tr>
+			<!-- TODO: Iterate over the Football_table data here 
+						1. Display the information for each row (date, name, home score, visitor score)
+						2. Determine who the winner is and display it in the final column
+
+						If you're not sure how the logic should work here, review the code you add to the client-side javascript
+						that ran onload for Lab 5.  We are doing the same kind of operations we had in Lab 5, but we are instead having
+						everything handled via server-side scripts
+			-->
+			<%
+				if(result_1) {
+					var date = [];
+					var i = 0;
+					var opposing_team = [];
+					var home_score = [];
+					var opp_score = [];
+					var winner = [];
+				    result_1.forEach(function(game){
+						date[i] = game.game_date;
+						opposing_team[i] = game.visitor_name;
+						home_score[i] = game.home_score;
+						opp_score[i] = game.visitor_score;
+						if (game.home_score > game.visitor_score){
+							winner[i] = 'Colorado';
+						}
+						else{
+							winner[i] = game.visitor_name;
+						}
+						i++;
+					}); %>
+
+
+			   <% } %>
+
+			<%
+			for (var row = 0; row < 12; row++){ %>
+				<tr> 
+					<td> <%=date[row]%> </td>
+					<td> <%=opposing_team[row]%> </td>
+					<td> <%=home_score[row]%> </td>
+					<td> <%=opp_score[row]%> </td>
+					<td> <%=winner[row]%> </td>
+				</tr>
+
+		  <%}%>
+
+		</table>
+		<br>
+		<table class="table text-center table-dark">
+			<tr>
+				<th>Wins</th>
+				<th>Losses</th>
+			</tr>
+			<tr>
+				<td> <%- wins %> </td>
+				<td> <%- losses %> </td>
+			</tr>
+		</table>
+		
+	</div>
+<% include ../partials/footer %>
